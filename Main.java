@@ -27,7 +27,7 @@ class Main  implements ActionListener
 	private static final String masterUserName= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static final String masterPassword= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static String loginPassWordText, loginUserNameText, passwordHash, unameHash, siteName, siteNameDef, password, userName, passWord, siteNameRes, sysName, path, MpassWordString, captchaString, gen_captcha="";
-	private static final String passWordKey = "E9*&gX@#Z93liFM#",fileKey = "fU&9H5#1UntY3Y!B",userNameKey = "Br8!0Zc#39P7c@#b", initVector = "V&&K$f7pT9mV/6gY";
+	private static final String passWordKey = "it6.uJOf@2#MagD%",fileKey = "fU&9H5#1UntY3Y!B",userNameKey = "Br8!0Zc#39P7c@#b", initVector = "V&&K$f7pT9mV/6gY";
 	//just in case I do something pertaining to databases
 	private static final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=UserBase",connectionUserName = "sa";
 	private static int tempvar=0,sample=0,tempex=0,sampsucvar=0,integer=0,blankFieldVar=0,loginFailureVar=0,failvar=0,sypBlankFieldVar=0;
