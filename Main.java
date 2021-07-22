@@ -843,17 +843,17 @@ class Main  implements ActionListener
 		}
 	}
 
-	public static String generateCaptcha(String togen)
+	public static String generateCaptcha(String toGen)
 	{
-		    for(int i=1;i<=1;i++)
+		    for(int i=1;i<=8;i++)
 			{
 				String [] captchaCharacters = {"D","w","8","!","3","A","T","a","@","7","c","1","r","$","6","#","B","m","F","C","5","H","v","&","L","Y","2","t","%","6","E","i","W","P","z","d","4","&","M","s","Z","g","S","q","N","V","K","*","G","b","n","Q","u","y","j","X","u","R","p","x","J","o","e","U","9","h","f","k"};
 				Random rand = new Random();
 				int index = rand.nextInt(captchaCharacters.length-1);
-				togen = togen + captchaCharacters[index];
+				toGen = toGen + captchaCharacters[index];
 			}
 
-			return togen;
+			return toGen;
 	}
 
 	public void seePassWordsWindow()
