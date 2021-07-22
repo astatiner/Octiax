@@ -24,16 +24,17 @@ import javax.crypto.spec.SecretKeySpec;
 class Main  implements ActionListener
 { 
 	//Initialization of components of UI and variables.
-	private static final String userName1= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
-	private static final String masterPassword = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+	private static final String masterUserName= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+	private static final String masterPassword= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static String loginPassWordText, loginUserNameText, passwordHash, unameHash, siteName, siteNameDef, password, userName, passWord, siteNameRes, sysName, path, MpassWordString, captchaString, gen_captcha="";
 	private static final String passWordKey = "E9*&gX@#Z93liFM#",fileKey = "fU&9H5#1UntY3Y!B",userNameKey = "Br8!0Zc#39P7c@#b", initVector = "V&&K$f7pT9mV/6gY";
+	//just in case I do something pertaining to databases
 	private static final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=UserBase",connectionUserName = "sa";
 	private static int tempvar=0,sample=0,tempex=0,sampsucvar=0,integer=0,blankFieldVar=0,loginFailureVar=0,failvar=0,sypBlankFieldVar=0;
 	private static String generated_password="",basepath,generated_string,password1;
 	private static JPanel panel,loginPanel,SUPanel,confirmationPanel,syPanel;
 	private static JLabel loginUserName,loginPassWord,loginFailure,siteNames,savedPass,sypBlankField,blankField,emailLabelSU,userNameLabelSU,passWordLabelSU,captchaLabelSU,siteLabel,passwordLabel,usernameLabel,pwdnotsaved,genpwd,pwdsaved,sampsuc,Confirmation,Captcha,displayCaptcha,MPassword,SYPsuccess,SYPfailure;
-	private static JTextField siteText,usernameText,captchaField,loginUserNameField,toSee;
+	private static JTextField siteText,usernameText,captchaField,loginUserNameField,resultSiteName;
 	private static JPasswordField passwordText,MPasswordField,loginPassWordField;
 	private static JButton SAVE,gap,SYP,SAVE1,GO,loginButton,signUpButton;
 	private static JFrame frame,sypFrame,loginFrame,signUpFrame,confirmationFrame;
@@ -42,8 +43,9 @@ class Main  implements ActionListener
 	 public static void main(String[] args) throws Exception
 	 {
 	 	sysName = System.getProperty("user.name");
+	 	System.out.println(sysName);
 	 	Date date = new Date();
-	 	System.out.println(System.getProperty("os.name")+" local date-time: "+date.toString());
+	 	System.out.println(System.getProperty("os.name")+" "+" local date-time: "+date.toString());
 	 	path = "C://Users//"+sysName+"//Desktop//";
 
 	    loginFrame = new JFrame("Login to Octiax");
@@ -74,7 +76,7 @@ class Main  implements ActionListener
 		loginPanel.add(signUpButton);
 		loginFrame.add(loginPanel);
 	 	loginFrame.setVisible(true);
-		loginFrame.setVisible(true);
+	 	loginFrame.setResizable(false);
 	}
 
 	
@@ -110,7 +112,7 @@ class Main  implements ActionListener
 			{
 				try 
 				{
-					if (hashStrings(loginUserNameText).equals(userName1)&&hashStrings(loginPassWordText).equals(masterPassword))
+					if (hashStrings(loginUserNameText).equals(masterUserName)&&hashStrings(loginPassWordText).equals(masterPassword))
 					{
 						mainWindow();
 					}
@@ -145,7 +147,7 @@ class Main  implements ActionListener
 			passchar = passwordText.getPassword();
 			userName = usernameText.getText();
 			password1 = new String(passchar);
-			basepath = "C://Users//"+sysName+"//Desktop//OctiaxVault//base.txt";
+			basepath = "C://Users//"+sysName+"//Desktop//OctiaxVault//src//base.txt";
 			if(userName.equals("")||siteName.equals("")||password1.equals(""))
 				{
 					//This block of code runs when the user has left any of the three fields: username, sitename or password blank.
@@ -154,6 +156,7 @@ class Main  implements ActionListener
 						pwdsaved.setVisible(false);
 						tempvar--;
 					}
+
 					if(sample>0)
 					{
 						pwdnotsaved.setVisible(false);
@@ -268,9 +271,6 @@ class Main  implements ActionListener
 		if(e.getSource()==gap)
 		{
 
-			siteNameDef = siteText.getText();
-			userName = usernameText.getText();
-			siteName = siteNameDef.toLowerCase();			
 			if(sample>0)
 			{
 				pwdnotsaved.setVisible(false);
@@ -307,7 +307,6 @@ class Main  implements ActionListener
 			gap.setVisible(false);
         for(;;)
         {
-
 			int length,temp;
 			generated_password = "";
 			Random  rd = new Random();
@@ -352,11 +351,12 @@ class Main  implements ActionListener
 		if(e.getSource()==SAVE1)
 		{
 			char[] passwordarray;
-			siteName = siteText.getText();
-			passwordarray = passwordText.getPassword();
+			siteNameDef = siteText.getText();
+            siteName = siteNameDef.toLowerCase();
+            passwordarray = passwordText.getPassword();
 			userName = usernameText.getText();
 			password1 = new String(passwordarray);
-			basepath = "C://Users//"+sysName+"//Desktop//OctiaxVault//base.txt";
+			basepath = "C://Users//"+sysName+"//Desktop//OctiaxVault//src//base.txt";
 			if(userName.equals("")||siteName.equals(""))
 			{
 
@@ -755,7 +755,7 @@ class Main  implements ActionListener
 					System.out.println("Folder created");
 
 					//Creating the base file
-					String baseFile = "C://Users//"+sysName+"//Desktop//OctiaxVault//base.txt";
+					String baseFile = "C://Users//"+sysName+"//Desktop//OctiaxVault//src//base.txt";
 					String basefilepath = baseFile;
 					File basefile = new File(basefilepath);
 					if(basefile.exists())
@@ -783,6 +783,7 @@ class Main  implements ActionListener
 		//Defining components of UI.
 		frame = new JFrame("Octiax Password Manager");
 		frame.setSize(450,450);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
 		frame.add(panel);
@@ -844,7 +845,7 @@ class Main  implements ActionListener
 
 	public static String generateCaptcha(String togen)
 	{
-		    for(int i=1;i<=8;i++)
+		    for(int i=1;i<=1;i++)
 			{
 				String [] captchaCharacters = {"D","w","8","!","3","A","T","a","@","7","c","1","r","$","6","#","B","m","F","C","5","H","v","&","L","Y","2","t","%","6","E","i","W","P","z","d","4","&","M","s","Z","g","S","q","N","V","K","*","G","b","n","Q","u","y","j","X","u","R","p","x","J","o","e","U","9","h","f","k"};
 				Random rand = new Random();
@@ -855,64 +856,39 @@ class Main  implements ActionListener
 			return togen;
 	}
 
-	public static void seePassWordsWindow()
+	public void seePassWordsWindow()
 	{
+		ArrayList<String> fileNames = new ArrayList<String>();
 		try {
-			String basePath = "C:\\Users\\" + sysName + "\\Desktop\\OctiaxVault\\base.txt";
-			ArrayList<String> fileNames = new ArrayList<String>();
+			String basePath = "C:\\Users\\" + sysName + "\\Desktop\\OctiaxVault\\src\\base.txt";
 			BufferedReader br = new BufferedReader(new FileReader(basePath));
 			String currentLine;
 			while ((currentLine = br.readLine()) != null) {
 				fileNames.add(fileDecrypt(currentLine));
 			}
 		}
-		catch (Exception someshit)
+		catch (Exception exec)
 		{
-			someshit.printStackTrace();
+			exec.printStackTrace();
 		}
-
-		try
-		{
-
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("Enter the name of site you want to see the password for: ");
-			String sitename = scanner.nextLine();
-			String lowerSiteName = sitename.toLowerCase();
-			String actualSiteName = hashStrings(lowerSiteName);
-			String path = "C:\\Users\\"+sysName+"\\Desktop\\OctiaxVault\\"+actualSiteName+".txt";
-			String path1 = "C:\\Users\\"+sysName+"\\Desktop\\OctiaxVault\\"+actualSiteName+"(@!0Zk).txt";
-			File file = new File(path);
-			File nFile = new File(path1);
-			ArrayList <String> resultArrayList = new ArrayList <String> ();
-			if(file.exists())
-			{
-				if(nFile.exists())
-				{
-					System.out.println("Match found, retrieving details....");
-					Scanner fileScannerOne = new Scanner(new File(path));
-					Scanner fileScannerTwo = new Scanner(new File(path1));
-					while(fileScannerOne.hasNext())
-					{
-						resultArrayList.add(fileScannerOne.next());
-					}
-					while(fileScannerTwo.hasNext())
-					{
-						resultArrayList.add(fileScannerTwo.next());
-					}
-					String retreievedPassword = resultArrayList.get(0);
-					String retreievedUserName = resultArrayList.get(1);
-					String resultPassword = passWordDecrypt(retreievedPassword);
-					String resultUsername = userNameDecrypt(retreievedUserName);
-					System.out.println("Username: "+resultUsername);
-					System.out.println("Password: "+resultPassword);
-					System.exit(0);
-				}
-			}
-		}
-
-		catch(Exception exce)
-		{
-			exce.printStackTrace();
-		}
+			sypFrame = new JFrame("Octiax: Saved Passwords");
+			sypFrame.setSize(69*fileNames.size(),500);
+			sypFrame.repaint();
+			syPanel = new JPanel();
+			sypFrame.add(syPanel);
+			syPanel.setLayout(null);
+			JLabel someLabel = new JLabel("Passwords saved for sites: "+fileNames);
+			syPanel.add(someLabel);
+			someLabel.setBounds(10,10,69*fileNames.size(),25);
+			sypFrame.setVisible(true);
+			sypFrame.setResizable(false);
+			myPasswords();
 	}
+
+	public void myPasswords()
+    {
+        JLabel newlabel = new JLabel("Enter the name of the site you want to see the password for: ");
+        syPanel.add(newlabel);  
+        newlabel.setBounds(10,40,450,25);
+    }
 }
