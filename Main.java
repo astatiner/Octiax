@@ -723,7 +723,7 @@ class Main  implements ActionListener
 		SUPanel.setLayout(null);
 		emailLabelSU = new JLabel("Email: ");
 		userNameLabelSU = new JLabel("Set a username: ");
-		passWordLabelSU = new JLabel("Set a master password:");
+		passWordLabelSU = new JLabel("Be gone this is still not done:");
 		emailLabelSU.setBounds(10,10,120,25);
 		userNameLabelSU.setBounds(10,35,120,25);
 		passWordLabelSU.setBounds(10,60,170,25);
