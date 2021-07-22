@@ -14,7 +14,7 @@ import org.apache.commons.codec.binary.Base64;
 
 public class seeYourPasswords
 {
-	private static final String passWordKey = "E9*&gX@#Z93liFM#", userNameKey = "Br8!0Zc#39P7c@#b", initVector = "V&&K$f7pT9mV/6gY",fileKey = "fU&9H5#1UntY3Y!B";
+	private static final String passWordKey = "it6.uJOf@2#MagD%", userNameKey = "Br8!0Zc#39P7c@#b", initVector = "V&&K$f7pT9mV/6gY",fileKey = "fU&9H5#1UntY3Y!B";
 	private static String sysName = System.getProperty("user.name");
 	public static void main(String[] args) throws Exception {
 		ArrayList<String> dns = new ArrayList<String>();
