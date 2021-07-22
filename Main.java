@@ -12,7 +12,7 @@ import java.awt.event.*;
 import java.util.regex.*;
 import javax.imageio.ImageIO;
 
-//APIs for hashing and encryption of passwords.
+//Libraries for hashing and encryption of passwords.
 import org.apache.commons.codec.binary.Base64;
 import java.security.MessageDigest;
 import java.util.regex.Pattern;
