@@ -36,7 +36,6 @@ class Main  implements ActionListener {
 	private static JButton SAVE,gap,SYP,SAVE1,GO,loginButton,signUpButton;
 	private static JFrame frame,sypFrame,loginFrame,signUpFrame,confirmationFrame;
 
-	//main class
 	 public static void main(String[] args) throws Exception {
 	 	 sysName = System.getProperty("user.name");
 	 	 System.out.println(sysName);
