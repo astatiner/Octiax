@@ -203,36 +203,34 @@ class Main  implements ActionListener {
 
 						pwdsaved = new JLabel("Password saved successfully!");
 						tempvar++;
-							try {
-									FileWriter fileStream = new FileWriter(basepath, true);
-									BufferedWriter outWriter = new BufferedWriter(fileStream);
-									outWriter.write(fileEncrypt(siteName)+"\n");
-									outWriter.close();
-								}
-								catch(Exception filex) {
-									filex.printStackTrace();
-								}
-								panel.add(pwdsaved);
-								siteText.setText("");
+						try {
+							FileWriter fileStream = new FileWriter(basepath, true);
+							BufferedWriter outWriter = new BufferedWriter(fileStream);
+							outWriter.write(fileEncrypt(siteName)+"\n");
+							outWriter.close();
+							}
+						catch(Exception filex) {
+							filex.printStackTrace();
+							}
+							panel.add(pwdsaved);
+							siteText.setText("");
         						passwordText.setText("");
         						usernameText.setText("");
-								gap.setVisible(true);
-								gap.setBounds(10,170,300,25);
-								pwdsaved.setBounds(10,140,180,25);
-				
-							}
-
-							catch(Exception ex) {
-								System.out.println("An error occured.");
-								ex.printStackTrace();
-							}
-			
-					}
+							gap.setVisible(true);
+							gap.setBounds(10,170,300,25);
+							pwdsaved.setBounds(10,140,180,25);
+						}
 
 					catch(Exception ex) {
-							ex.printStackTrace();
+						System.out.println("An error occured.");
+						ex.printStackTrace();
 					}
+			   }
+
+			    catch(Exception ex) {
+					ex.printStackTrace();
 				}
+			}
 		}
 
 		if(e.getSource()==gap) {
@@ -267,31 +265,33 @@ class Main  implements ActionListener {
 
 			SAVE.setVisible(false);
 			gap.setVisible(false);
-        for(;;) {
-			int length,temp;
-			generated_password = "";
-			Random  rd = new Random();
-			String [] characters = {"D","w","8","!","3","A","T","a","@","7","c","1","r","$","I","6","#","B","m","F","C","l","5","H","v","&","L","Y","2","t","%","6","E","i","W","P","z","d","4","&","M","s","Z","g","S","O","q","N","V","K","*","G","b","n","Q","u","y","j","0","X","u","R","p","x","J","o","e","U","9","h","f","k"};
-			length = characters.length;
-			int password_length=rd.nextInt(4)+16;
 
-			for(int ex=1;ex<=password_length;ex++) {
-				temp = rd.nextInt(length);
-				generated_string = characters[temp];
-				generated_password = generated_password + generated_string;
-			}
+       		 for(;;) {
+					int length,temp;
+					generated_password = "";
+					Random  rd = new Random();
+					String [] characters = {"D","w","8","!","3","A","T","a","@","7","c","1","r","$","I","6","#","B","m","F","C","l","5","H","v","&","L","Y","2","t","%","6","E","i","W","P","z","d","4","&","M","s","Z","g","S","O","q","N","V","K","*","G","b","n","Q","u","y","j","0","X","u","R","p","x","J","o","e","U","9","h","f","k"};
+					length = characters.length;
+					int password_length=rd.nextInt(4)+16;
+
+					for(int ex=1;ex<=password_length;ex++) {
+						temp = rd.nextInt(length);
+						generated_string = characters[temp];
+						generated_password = generated_password + generated_string;
+					}
             
-            	Matcher matcher = pattern.matcher(generated_password);
-            	Boolean exp = matcher.matches();
-                if(exp==true) {
-                    break;
-                }
-                else {
-                    generated_password="";
-					System.out.println("Password not upto the mark, generating another, stronger password.");
-                    continue;
-                }
-        }       
+            		Matcher matcher = pattern.matcher(generated_password);
+            		Boolean exp = matcher.matches();
+               		 if(exp==true) {
+                   		 break;
+                		}
+                	 else {
+                    	generated_password="";
+						System.out.println("Password not upto the mark, generating another, stronger password.");
+                    	continue;
+                		}
+        		}  
+
 			genpwd = new JLabel("Generated Password: "+generated_password);
 			System.out.println(generated_password);
 			tempex++;
@@ -314,6 +314,7 @@ class Main  implements ActionListener {
 			userName = usernameText.getText();
 			password1 = new String(passwordarray);
 			basepath = "C://Users//"+sysName+"//Desktop//OctiaxVault//src//base.txt";
+
 			if(userName.equals("")||siteName.equals("")) {
 
 				if(integer>0) {
@@ -344,6 +345,7 @@ class Main  implements ActionListener {
 			}
 
 			else {
+				
 				try {
 					try {
 
