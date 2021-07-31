@@ -5,162 +5,160 @@ Sample Password: admin
 */
 
 //Libraries for exception handling, file management, database management, data structures, regex, GUI and image handling.
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.*;
+import java.net.URI;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.regex.*;
 import javax.imageio.ImageIO;
+import java.util.regex.Pattern;
 
-//Libraries for hashing and encryption of passwords.
+//APIs for hashing and encryption of passwords.
 import org.apache.commons.codec.binary.Base64;
 import java.security.MessageDigest;
-import java.util.regex.Pattern;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
-class Main  implements ActionListener { 
+class Main  implements ActionListener {
 	//Initialization of components of UI and variables.
 	private static final String masterUserName= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static final String masterPassword= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static String loginPassWordText, loginUserNameText, passwordHash, unameHash, siteName, siteNameDef, password, userName, passWord, siteNameRes, sysName, path, MpassWordString, captchaString, gen_captcha="";
-	private static final String passWordKey = "it6.uJOf@2#MagD%",fileKey = "N!@&$k9nVLzoQOuW",userNameKey = "hS3s*fU7&dkSp$&5", initVector = "*$SI9!7&yyrUjY@l";
-	private static int tempvar=0,sample=0,tempex=0,sampsucvar=0,integer=0,blankFieldVar=0,loginFailureVar=0,failvar=0,sypBlankFieldVar=0;
+	private static final String passWordKey = "it6.uJOf@2#MagD%",fileKey = "N!@&$k9nVLzoQOuW",userNameKey = "hS3s*fU7&dkSp$&5", initVector = "N!@&$k9nVLzoQOuW";
+	private static int tempvar=0,sample=0,tempex=0,sampsucvar=0,integer=0,blankFieldVar=0,loginFailureVar=0,failvar=0,sypBlankFieldVar=0,goVar=0;
 	private static String generated_password="",basepath,generated_string,password1;
 	private static JPanel panel,loginPanel,SUPanel,confirmationPanel,syPanel;
-	private static JLabel loginUserName,loginPassWord,loginFailure,siteNames,savedPass,sypBlankField,blankField,emailLabelSU,userNameLabelSU,passWordLabelSU,captchaLabelSU,siteLabel,passwordLabel,usernameLabel,pwdnotsaved,genpwd,pwdsaved,sampsuc,Confirmation,Captcha,displayCaptcha,MPassword,SYPsuccess,SYPfailure;
-	private static JTextField siteText,usernameText,captchaField,loginUserNameField,resultSiteName;
+	private static JLabel loginUserName,loginPassWord,loginFailure,sitePassLabel,resultUserName, copy, resultPassWord, siteNames,savedPass,sypBlankField,blankField,emailLabelSU,userNameLabelSU,passWordLabelSU,captchaLabelSU,siteLabel,passwordLabel,usernameLabel,pwdnotsaved,genpwd,pwdsaved,sampsuc,Confirmation,Captcha,displayCaptcha,MPassword,SYPsuccess,SYPfailure;
+	private static JTextField siteText,usernameText,captchaField,loginUserNameField,resultSiteName,inputSiteName;
 	private static JPasswordField passwordText,MPasswordField,loginPassWordField;
-	private static JButton SAVE,gap,SYP,SAVE1,GO,loginButton,signUpButton;
+	private static JButton SAVE,gap,SYP,SAVE1,GO,loginButton,signUpButton,getPass,go;
 	private static JFrame frame,sypFrame,loginFrame,signUpFrame,confirmationFrame;
-
+	private static String basePath, passPath, uNamePath, localSysName;
+	//main class
 	 public static void main(String[] args) throws Exception {
-	 	 sysName = System.getProperty("user.name");
-	 	 System.out.println(sysName);
-	 	 Date date = new Date();
-	 	 System.out.println(System.getProperty("os.name")+" "+" local date-time: "+date.toString());
-	 	 path = "C://Users//"+sysName+"//Desktop//";
-
-	   	 loginFrame = new JFrame("Login to Octiax");
-	   	 loginFrame.setIconImage(ImageIO.read(new File("C://Octiax//logo.png")));
-	   	 loginUserName = new JLabel("Enter your username: ");
-	 	 loginPassWord = new JLabel("Enter your password: ");
-	 	 loginUserNameField = new JTextField();
-	 	 loginPassWordField = new JPasswordField();
-	 	 loginPanel = new JPanel();
-	 	 loginButton = new JButton("LOGIN");
-	 	 signUpButton = new JButton("SIGN UP");
-	 	 loginPanel.setLayout(null);
-	 	 loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 	 loginFrame.setSize(450,400);
-	 	 loginUserName.setBounds(10,10,150,30);
-	 	 loginPassWord.setBounds(10,40,150,30);
-	 	 loginUserNameField.setBounds(165,10,140,25);
-	 	 loginPassWordField.setBounds(165,40,140,25);
-	 	 loginButton.setBounds(10,75,80,25);
-	 	 signUpButton.setBounds(10,115,100,25);
-	 	 loginButton.addActionListener(new Main());
-	 	 signUpButton.addActionListener(new Main());
-	 	 loginPanel.add(loginUserNameField);
-	 	 loginPanel.add(loginPassWordField);
-		 loginPanel.add(loginUserName);
-		 loginPanel.add(loginPassWord);
-		 loginPanel.add(loginButton);
-		 loginPanel.add(signUpButton);
-		 loginFrame.add(loginPanel);
-	 	 loginFrame.setVisible(true);
-	 	 loginFrame.setResizable(false);
+	 	sysName = System.getProperty("user.name");
+	 	System.out.println(sysName);
+	 	Date date = new Date();
+	 	System.out.println(System.getProperty("os.name")+" local date-time: "+date.toString());
+	 	path = "C://Users//"+sysName+"//Desktop//";
+	    loginFrame = new JFrame("Login to Octiax");
+	    loginFrame.setIconImage(ImageIO.read(new File("C://Octiax//logo.png")));
+	    loginUserName = new JLabel("Enter your username: ");
+	 	loginPassWord = new JLabel("Enter your password: ");
+	 	loginUserNameField = new JTextField();
+	 	loginPassWordField = new JPasswordField();
+	 	loginPanel = new JPanel();
+	 	loginButton = new JButton("LOGIN");
+	 	signUpButton = new JButton("SIGN UP");
+	 	loginPanel.setLayout(null);
+	 	loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	 	loginFrame.setSize(450,400);
+	 	loginUserName.setBounds(10,10,150,30);
+	 	loginPassWord.setBounds(10,40,150,30);
+	 	loginUserNameField.setBounds(165,10,140,25);
+	 	loginPassWordField.setBounds(165,40,140,25);
+	 	loginButton.setBounds(10,75,80,25);
+	 	signUpButton.setBounds(10,115,100,25);
+	 	loginButton.addActionListener(new Main());
+	 	signUpButton.addActionListener(new Main());
+	 	loginPanel.add(loginUserNameField);
+	 	loginPanel.add(loginPassWordField);
+		loginPanel.add(loginUserName);
+		loginPanel.add(loginPassWord);
+		loginPanel.add(loginButton);
+		loginPanel.add(signUpButton);
+		loginFrame.add(loginPanel);
+	 	loginFrame.setVisible(true);
+	 	loginFrame.setResizable(false);
 	}
 
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==loginButton) {
-			if(loginFailureVar>0) {
+		if (e.getSource() == loginButton) {
+			if (loginFailureVar > 0) {
 				loginFailure.setVisible(false);
 				loginFailureVar--;
 			}
 
-			if(blankFieldVar>0) {
+			if (blankFieldVar > 0) {
 				blankField.setVisible(false);
 				blankFieldVar--;
 			}
 
 			loginUserNameText = loginUserNameField.getText();
-			char [] loginPassWordChar = loginPassWordField.getPassword();
+			char[] loginPassWordChar = loginPassWordField.getPassword();
 			loginPassWordText = new String(loginPassWordChar);
 
-			if(loginPassWordText.equals("")||loginUserNameText.equals("")) {
+			if (loginPassWordText.equals("") || loginUserNameText.equals("")) {
 				blankField = new JLabel("Please don't leave any field blank, try again.");
 				blankFieldVar++;
 				loginPanel.add(blankField);
-				blankField.setBounds(10,140,250,25);
-			}
-
-			else {
+				blankField.setBounds(10, 140, 250, 25);
+			} else {
 				try {
-					if (hashStrings(loginUserNameText).equals(masterUserName)&&hashStrings(loginPassWordText).equals(masterPassword)) {
+					if (hashStrings(loginUserNameText).equals(masterUserName) && hashStrings(loginPassWordText).equals(masterPassword)) {
 						mainWindow();
-					}
-					else {
+					} else {
 						loginFailure = new JLabel("Wrong username or password.");
 						loginFailureVar++;
 						loginPanel.add(loginFailure);
-						loginFailure.setBounds(10,140,250,25);
+						loginFailure.setBounds(10, 140, 250, 25);
 					}
-				}
-
-				catch (Exception loginException) {
+				} catch (Exception loginException) {
 					loginException.printStackTrace();
 				}
 			}
 		}
 
-		if(e.getSource()==signUpButton) {
+		if (e.getSource() == signUpButton) {
 			signUp();
 		}
 
-		if(e.getSource()==SAVE) {
+		if (e.getSource() == SAVE) {
+			//Condition where the user is entering his/her own password.
 			char[] passchar;
 			siteNameDef = siteText.getText();
 			siteName = siteNameDef.toLowerCase();
 			passchar = passwordText.getPassword();
 			userName = usernameText.getText();
 			password1 = new String(passchar);
-			basepath = "C://Users//"+sysName+"//Desktop//OctiaxVault//src//base.txt";
-			if(userName.equals("")||siteName.equals("")||password1.equals("")) {
-			
-				if(tempvar>0) {
-				 	pwdsaved.setVisible(false);
+			basepath = "C://Users//" + sysName + "//Desktop//OctiaxVault//src//base.txt";
+			if (userName.equals("") || siteName.equals("") || password1.equals("")) {
+				//This block of code runs when the user has left any of the three fields: username, sitename or password blank.
+				if (tempvar > 0) {
+					pwdsaved.setVisible(false);
 					tempvar--;
 				}
 
-				if(sample>0) {
+				if (sample > 0) {
 					pwdnotsaved.setVisible(false);
 					sample--;
 				}
 
-				if(tempex>0) {
+				if (tempex > 0) {
 					genpwd.setVisible(false);
 					tempex--;
 				}
 
-				if(sampsucvar>0) {
+				if (sampsucvar > 0) {
 					sampsuc.setVisible(false);
 					sampsucvar--;
 				}
 
 				pwdnotsaved = new JLabel("Please don't leave any field blank. Try again.");
 				sample++;
-				gap.setBounds(10,200,300,25);
+				gap.setBounds(10, 200, 300, 25);
 				gap.addActionListener(new Main());
 				panel.add(pwdnotsaved);
-				pwdnotsaved.setBounds(10,140,280,25);
+				pwdnotsaved.setBounds(10, 140, 280, 25);
 
-			}
-
-			else {
+			} else {
 				char[] passwordarr;
 				siteNameDef = siteText.getText();
 				siteName = siteNameDef.toLowerCase();
@@ -172,30 +170,30 @@ class Main  implements ActionListener {
 
 						siteNameRes = hashStrings(siteName);
 						System.out.println(siteNameRes);
-        					FileWriter fw = new FileWriter(path+"\\"+siteNameRes+".txt");
-						FileWriter fwr = new FileWriter(path+"\\"+siteNameRes+"(@!0Zk).txt");
+						FileWriter fw = new FileWriter(path + "\\" + siteNameRes + ".txt");
+						FileWriter fwr = new FileWriter(path + "\\" + siteNameRes + "(@!0Zk).txt");
 						fw.write(passWordEncrypt(password1));
 						fw.close();
 
 						fwr.write(userNameEncrypt(userName));
 						fwr.close();
 
-						if(tempvar>0) {
+						if (tempvar > 0) {
 							pwdsaved.setVisible(false);
 							tempvar--;
 						}
 
-						if(sample>0) {
+						if (sample > 0) {
 							pwdnotsaved.setVisible(false);
 							sample--;
 						}
 
-						if(tempex>0) {
+						if (tempex > 0) {
 							genpwd.setVisible(false);
 							tempex--;
 						}
 
-						if(sampsucvar>0) {
+						if (sampsucvar > 0) {
 							sampsuc.setVisible(false);
 							sampsucvar--;
 						}
@@ -205,133 +203,125 @@ class Main  implements ActionListener {
 						try {
 							FileWriter fileStream = new FileWriter(basepath, true);
 							BufferedWriter outWriter = new BufferedWriter(fileStream);
-							outWriter.write(fileEncrypt(siteName)+"\n");
+							outWriter.write(fileEncrypt(siteName) + "\n");
 							outWriter.close();
-							}
-						catch(Exception filex) {
+						} catch (Exception filex) {
 							filex.printStackTrace();
-							}
-							panel.add(pwdsaved);
-							siteText.setText("");
-        						passwordText.setText("");
-        						usernameText.setText("");
-							gap.setVisible(true);
-							gap.setBounds(10,170,300,25);
-							pwdsaved.setBounds(10,140,180,25);
 						}
+						panel.add(pwdsaved);
+						siteText.setText("");
+						passwordText.setText("");
+						usernameText.setText("");
+						gap.setVisible(true);
+						gap.setBounds(10, 170, 300, 25);
+						pwdsaved.setBounds(10, 140, 180, 25);
 
-					catch(Exception ex) {
+					} catch (Exception ex) {
 						System.out.println("An error occured.");
 						ex.printStackTrace();
 					}
-			   }
 
-			    catch(Exception ex) {
+				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		}
 
-		if(e.getSource()==gap) {
+		if (e.getSource() == gap) {
 
-			if(sample>0) {
+			if (sample > 0) {
 				pwdnotsaved.setVisible(false);
 				sample--;
 			}
 
-			if(tempvar>0) {
+			if (tempvar > 0) {
 				pwdsaved.setVisible(false);
 				tempvar--;
 			}
 
-			if(tempex>0) {
+			if (tempex > 0) {
 				genpwd.setVisible(false);
 				tempex--;
 			}
-						
-			if(sampsucvar>0) {
+
+			if (sampsucvar > 0) {
 				sampsuc.setVisible(false);
 				sampsucvar--;
 			}
-					    
 
-            String regex = "^(?=.*[0-9])"
-                         + "(?=.*[a-z])(?=.*[A-Z])"
-                         + "(?=.*[@#$%^&+!=])"
-                         + "(?=\\S+$).{8,20}$";
 
-            Pattern pattern = Pattern.compile(regex);
+			String regex = "^(?=.*[0-9])"
+					+ "(?=.*[a-z])(?=.*[A-Z])"
+					+ "(?=.*[@#$%^&+!=])"
+					+ "(?=\\S+$).{8,20}$";
+
+			Pattern pattern = Pattern.compile(regex);
 
 			SAVE.setVisible(false);
 			gap.setVisible(false);
+			for (; ; ) {
+				int length, temp;
+				generated_password = "";
+				Random rd = new Random();
+				String[] characters = {"D", "w", "8", "!", "3", "A", "T", "a", "@", "7", "c", "1", "r", "$", "I", "6", "#", "B", "m", "F", "C", "l", "5", "H", "v", "&", "L", "Y", "2", "t", "%", "6", "E", "i", "W", "P", "z", "d", "4", "&", "M", "s", "Z", "g", "S", "O", "q", "N", "V", "K", "*", "G", "b", "n", "Q", "u", "y", "j", "0", "X", "u", "R", "p", "x", "J", "o", "e", "U", "9", "h", "f", "k"};
+				length = characters.length;
+				int password_length = rd.nextInt(4) + 16;
 
-       		 for(;;) {
-					int length,temp;
+				for (int ex = 1; ex <= password_length; ex++) {
+					temp = rd.nextInt(length);
+					generated_string = characters[temp];
+					generated_password = generated_password + generated_string;
+				}
+
+				Matcher matcher = pattern.matcher(generated_password);
+				Boolean exp = matcher.matches();
+				if (exp == true) {
+					break;
+				} else {
 					generated_password = "";
-					Random  rd = new Random();
-					String [] characters = {"D","w","8","!","3","A","T","a","@","7","c","1","r","$","I","6","#","B","m","F","C","l","5","H","v","&","L","Y","2","t","%","6","E","i","W","P","z","d","4","&","M","s","Z","g","S","O","q","N","V","K","*","G","b","n","Q","u","y","j","0","X","u","R","p","x","J","o","e","U","9","h","f","k"};
-					length = characters.length;
-					int password_length=rd.nextInt(4)+16;
-
-					for(int ex=1;ex<=password_length;ex++) {
-						temp = rd.nextInt(length);
-						generated_string = characters[temp];
-						generated_password = generated_password + generated_string;
-					}
-            
-            		Matcher matcher = pattern.matcher(generated_password);
-            		Boolean exp = matcher.matches();
-               		 if(exp==true) {
-                   		 break;
-                		}
-                	 else {
-                    	generated_password="";
-						System.out.println("Password not upto the mark, generating another, stronger password.");
-                    	continue;
-                		}
-        		}  
-
-			genpwd = new JLabel("Generated Password: "+generated_password);
+					System.out.println("Password not upto the mark, generating another, stronger password.");
+					continue;
+				}
+			}
+			genpwd = new JLabel("Generated Password: " + generated_password);
 			System.out.println(generated_password);
 			tempex++;
 			panel.add(SAVE1);
 			SAVE1.setVisible(true);
-        	SAVE1.setBounds(10,200,80,25);
+			SAVE1.setBounds(10, 200, 80, 25);
 			panel.add(genpwd);
-			genpwd.setBounds(10,110,280,25);
+			genpwd.setBounds(10, 110, 280, 25);
 			integer++;
 			passwordText.setText(generated_password);
 			passwordText.setEditable(false);
 
 		}
 
-		if(e.getSource()==SAVE1) {
+		if (e.getSource() == SAVE1) {
 			char[] passwordarray;
 			siteNameDef = siteText.getText();
-            siteName = siteNameDef.toLowerCase();
-            passwordarray = passwordText.getPassword();
+			siteName = siteNameDef.toLowerCase();
+			passwordarray = passwordText.getPassword();
 			userName = usernameText.getText();
 			password1 = new String(passwordarray);
-			basepath = "C://Users//"+sysName+"//Desktop//OctiaxVault//src//base.txt";
-
-			if(userName.equals("")||siteName.equals("")) {
-
-				if(integer>0) {
-					genpwd.setBounds(10,170,300,25);
+			basepath = "C://Users//" + sysName + "//Desktop//OctiaxVault//src//base.txt";
+			if (userName.equals("") || siteName.equals("")) {
+				if (integer > 0) {
+					genpwd.setBounds(10, 170, 300, 25);
 					integer--;
 				}
 
-				if(tempvar>0) {
+				if (tempvar > 0) {
 					pwdsaved.setVisible(false);
 					tempvar--;
 				}
 
-				if(sample>0) {
+				if (sample > 0) {
 					pwdnotsaved.setVisible(false);
 					sample--;
 				}
-				
-				if(sampsucvar>0) {
+
+				if (sampsucvar > 0) {
 					sampsuc.setVisible(false);
 					sampsucvar--;
 				}
@@ -339,173 +329,168 @@ class Main  implements ActionListener {
 				pwdnotsaved = new JLabel("Please don't leave any field blank. Try again.");
 				sample++;
 				panel.add(pwdnotsaved);
-				pwdnotsaved.setBounds(10,140,280,25);
+				pwdnotsaved.setBounds(10, 140, 280, 25);
 
-			}
-
-			else {
-				
+			} else {
 				try {
 					try {
 
-					    if (sample>0) {
+						if (sample > 0) {
 							pwdnotsaved.setVisible(false);
 							sample--;
 						}
 
-						if(tempvar>0) {
+						if (tempvar > 0) {
 							pwdsaved.setVisible(false);
 						}
-								
-        				System.out.println("AES-128 Encrypted password: "+passWordEncrypt(password1));
-        				String siteNameResTwo;
-        				siteNameResTwo = hashStrings(siteName);
-        				FileWriter fwrr = new FileWriter(path+"\\"+siteNameResTwo+"(@!0Zk).txt");
-        				FileWriter newfwr = new FileWriter(path+"\\"+siteNameResTwo+".txt");
-        				fwrr.write(userNameEncrypt(userName));
-        				newfwr.write(passWordEncrypt(password1));
-        				fwrr.close();
-        				newfwr.close();
-        				sampsuc = new JLabel("Password saved successsfully!");
+
+						System.out.println("AES-128 Encrypted password: " + passWordEncrypt(password1));
+						String siteNameResTwo;
+						siteNameResTwo = hashStrings(siteName);
+						FileWriter fwrr = new FileWriter(path + "\\" + siteNameResTwo + "(@!0Zk).txt");
+						FileWriter newfwr = new FileWriter(path + "\\" + siteNameResTwo + ".txt");
+						fwrr.write(userNameEncrypt(userName));
+						newfwr.write(passWordEncrypt(password1));
+						fwrr.close();
+						newfwr.close();
+						sampsuc = new JLabel("Password saved successsfully!");
 						try {
 							FileWriter fileStreamGap = new FileWriter(basepath, true);
 							BufferedWriter outWriter = new BufferedWriter(fileStreamGap);
-							outWriter.write(fileEncrypt(siteName)+"\n");
+							outWriter.write(fileEncrypt(siteName) + "\n");
 							outWriter.close();
-						}
-						catch (Exception baseWriteExcept) {
+						} catch (Exception baseWriteExcept) {
 							baseWriteExcept.printStackTrace();
 						}
-        				sampsuc.setBounds(10,170,280,25);
-        				sampsucvar++;
-        				passwordText.setEditable(true);
-        				panel.add(sampsuc);
-             			siteText.setText("");
-        				passwordText.setText("");
-        				usernameText.setText("");
-        				gap.setVisible(true);
-        						
-        				genpwd.setVisible(false);
+						sampsuc.setBounds(10, 170, 280, 25);
+						sampsucvar++;
+						passwordText.setEditable(true);
+						panel.add(sampsuc);
+						siteText.setText("");
+						passwordText.setText("");
+						usernameText.setText("");
+						gap.setVisible(true);
 
-        				SAVE1.setVisible(false);
-        				SAVE.setVisible(true);
-        			}
+						genpwd.setVisible(false);
 
-        			catch(Exception soy) {
-        				soy.printStackTrace();
-        			}
-                }
-
-				catch(Exception except) {
+						SAVE1.setVisible(false);
+						SAVE.setVisible(true);
+					} catch (Exception soy) {
+						soy.printStackTrace();
+					}
+				} catch (Exception except) {
 					except.printStackTrace();
 				}
 			}
-        		
-        }
 
-        if(e.getSource()==SYP) {
-        	//This block of code runs when the user wants to see passwords saved.
+		}
+
+		if (e.getSource() == SYP) {
+			//This block of code runs when the user wants to see passwords saved.
 			frame.setVisible(false);
 			confirmationFrame = new JFrame("Confirm your login details");
 			confirmationPanel = new JPanel();
 			confirmationPanel.setLayout(null);
-        	confirmationFrame.setSize(550,350);
-        	Confirmation = new JLabel("We need to make sure it's you, please fill the following details.");
-        	gen_captcha = generateCaptcha("");
-       		Captcha = new JLabel("Enter the CAPTCHA you see below: ");
-       		displayCaptcha = new JLabel("CAPTCHA: "+gen_captcha);
-       		MPassword = new JLabel("Enter your master password: ");
-       		captchaField = new JTextField();
-       		MPasswordField = new JPasswordField();
-       		GO = new JButton("GO");
+			confirmationFrame.setSize(550, 350);
+			Confirmation = new JLabel("We need to make sure it's you, please fill the following details.");
+			gen_captcha = generateCaptcha("");
+			Captcha = new JLabel("Enter the CAPTCHA you see below: ");
+			displayCaptcha = new JLabel("CAPTCHA: " + gen_captcha);
+			MPassword = new JLabel("Enter your master password: ");
+			captchaField = new JTextField();
+			MPasswordField = new JPasswordField();
+			GO = new JButton("GO");
 
-			Confirmation.setBounds(10,10,500,40);
-			Captcha.setBounds(10,50,200,25);
-			displayCaptcha.setBounds(10,80,130,35);
-			MPassword.setBounds(10,120,180,25);
-			captchaField.setBounds(210,50,100,25);
-			MPasswordField.setBounds(210,120,170,25);
-			GO.setBounds(10,155,80,25);
+			Confirmation.setBounds(10, 10, 500, 40);
+			Captcha.setBounds(10, 50, 200, 25);
+			displayCaptcha.setBounds(10, 80, 130, 35);
+			MPassword.setBounds(10, 120, 180, 25);
+			captchaField.setBounds(210, 50, 100, 25);
+			MPasswordField.setBounds(210, 120, 170, 25);
+			GO.setBounds(10, 155, 80, 25);
 			GO.addActionListener(new Main());
 			confirmationFrame.add(confirmationPanel);
-       		confirmationPanel.add(MPasswordField);
-       		confirmationPanel.add(MPassword);
-       		confirmationPanel.add(captchaField);
-       		confirmationPanel.add(displayCaptcha);
-       		confirmationPanel.add(Confirmation);
-       		confirmationPanel.add(Captcha);
-       		confirmationPanel.add(GO);
+			confirmationPanel.add(MPasswordField);
+			confirmationPanel.add(MPassword);
+			confirmationPanel.add(captchaField);
+			confirmationPanel.add(displayCaptcha);
+			confirmationPanel.add(Confirmation);
+			confirmationPanel.add(Captcha);
+			confirmationPanel.add(GO);
 			confirmationFrame.setVisible(true);
-        }
+		}
 
-        if(e.getSource()==GO) {
+		if (e.getSource() == GO) {
 
 			char[] mpasswordarray;
 			mpasswordarray = MPasswordField.getPassword();
 			MpassWordString = new String(mpasswordarray);
 			captchaString = captchaField.getText();
-		try {
-			Boolean captchaBool = captchaString.equals("");
-			Boolean passBool = MpassWordString.equals("");
-			if(passBool==false&&captchaBool==false) {
-				Boolean passCheck = hashStrings(MpassWordString).equals(masterPassword);
-				Boolean captchaCheck = captchaString.equals(gen_captcha);
-				if(passCheck==true&&captchaCheck==true) {
-					if(failvar>0) {
+			try {
+				Boolean captchaBool = captchaString.equals("");
+				Boolean passBool = MpassWordString.equals("");
+				if (passBool == false && captchaBool == false) {
+					Boolean passCheck = hashStrings(MpassWordString).equals(masterPassword);
+					Boolean captchaCheck = captchaString.equals(gen_captcha);
+					if (passCheck == true && captchaCheck == true) {
+						if (failvar > 0) {
+							SYPfailure.setVisible(false);
+							failvar--;
+						}
+						System.out.println("Acess Granted");
+						SYPsuccess = new JLabel("Right credentials! You'll be redirected to your saved passwords' window in a few seconds.");
+						confirmationPanel.add(SYPsuccess);
+						confirmationFrame.setVisible(false);
+						seePassWordsWindow();
+					} else if (passCheck == false || captchaCheck == false) {
+						if (failvar > 0) {
+							SYPfailure.setVisible(false);
+							failvar--;
+						}
+
+						if (sypBlankFieldVar > 0) {
+							sypBlankField.setVisible(false);
+						}
+						gen_captcha = generateCaptcha("");
+						displayCaptcha.setText("CAPTCHA:" + gen_captcha);
+						System.out.println("Access Denied");
+						SYPfailure = new JLabel("Wrong credentials, please try again");
+						confirmationPanel.add(SYPfailure);
+						SYPfailure.setBounds(10, 185, 520, 25);
+						failvar++;
+					}
+				} else {
+
+					if (failvar > 0) {
 						SYPfailure.setVisible(false);
 						failvar--;
 					}
-					System.out.println("Acess Granted");
-					SYPsuccess = new JLabel("Right credentials! You'll be redirected to your saved passwords' window in a few seconds.");
-					confirmationPanel.add(SYPsuccess);
-					confirmationFrame.setVisible(false);
-					seePassWordsWindow();
-				}
 
-				else if(passCheck==false||captchaCheck==false) {
-					if(failvar>0) {
-						SYPfailure.setVisible(false);
-						failvar--;
-					}
-
-					if(sypBlankFieldVar>0) {
+					if (sypBlankFieldVar > 0) {
 						sypBlankField.setVisible(false);
 					}
-					gen_captcha = generateCaptcha("");
-					displayCaptcha.setText("CAPTCHA:"+gen_captcha);
-					System.out.println("Access Denied");
-					SYPfailure = new JLabel("Wrong credentials, please try again");
-					confirmationPanel.add(SYPfailure);
-					SYPfailure.setBounds(10,185,520,25);
-					failvar++;
+
+					sypBlankField = new JLabel("Please don't leave any field blank, try again");
+					confirmationPanel.add(sypBlankField);
+					sypBlankField.setBounds(10, 185, 520, 25);
+					sypBlankFieldVar++;
 				}
-			}
-
-			else {
-
-				if(failvar>0) {
-					SYPfailure.setVisible(false);
-					failvar--;
-				}
-
-				if(sypBlankFieldVar>0) {
-					sypBlankField.setVisible(false);
-				}
-
-				sypBlankField = new JLabel("Please don't leave any field blank, try again");
-				confirmationPanel.add(sypBlankField);
-				sypBlankField.setBounds(10,185,520,25);
-				sypBlankFieldVar++;
+			} catch (Exception hashexception) {
+				hashexception.printStackTrace();
 			}
 		}
-			catch(Exception hashexception) {
-				hashexception.printStackTrace();
+
+		if (e.getSource() == go) {
+			try {
+				String siteNameInp = inputSiteName.getText();
+				String result = getDetails(siteNameInp);
+			} catch (Exception exc) {
+				exc.printStackTrace();
 			}
 		}
 	}
 
-	public static String passWordEncrypt(String value) {
-        try {
+	public static String passWordEncrypt(String value) throws Exception {
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
             SecretKeySpec skeySpec = new SecretKeySpec(passWordKey.getBytes("UTF-8"), "AES");
 
@@ -514,13 +499,6 @@ class Main  implements ActionListener {
 
             byte[] encryptedPassword = cipher.doFinal(value.getBytes());
             return Base64.encodeBase64String(encryptedPassword);
-        } 	
-
-        catch (Exception ex) {
-           	 ex.printStackTrace();
-        }
-
-        return null;
     }
 
     public static String userNameEncrypt(String toencrypt) throws Exception {
@@ -732,7 +710,7 @@ class Main  implements ActionListener {
 			return togen;
 	}
 
-	public void seePassWordsWindow() {
+	public void seePassWordsWindow() throws Exception {
 		ArrayList<String> fileNames = new ArrayList<String>();
 		try {
 			String basePath = "C:\\Users\\" + sysName + "\\Desktop\\OctiaxVault\\src\\base.txt";
@@ -759,8 +737,73 @@ class Main  implements ActionListener {
 			myPasswords();
 	}
 
-	public void myPasswords() {
-        JLabel newlabel = new JLabel("Enter the name of the site you want to see the password for: ");
-        syPanel.add(newlabel);  
-        newlabel.setBounds(10,40,450,25);
+	public void myPasswords() throws Exception {
+        sitePassLabel = new JLabel("Enter the name of the site you want to see the password for: ");
+        syPanel.add(sitePassLabel);
+        sitePassLabel.setBounds(10,40,350,25);
+        inputSiteName = new JTextField();
+        inputSiteName.setBounds(400,40,150,25);
+        syPanel.add(inputSiteName);
+        go = new JButton("GO");
+        go.addActionListener(new Main());
+        syPanel.add(go);
+        go.setBounds(10,70,60,25);
     }
+
+    public String getDetails(String siteNameInp) throws Exception {
+	 	if(goVar>0) {
+	 		inputSiteName.setText("");
+	 		resultUserName.setVisible(false);
+	 		resultPassWord.setVisible(false);
+	 		goVar--;
+		}
+	 	localSysName = System.getProperty("user.name");
+	 	String hashedSiteName = hashStrings(siteNameInp);
+	 	uNamePath = "C:\\Users\\"+localSysName+"\\Desktop\\OctiaxVault\\" + hashedSiteName + "(@!0Zk).txt";
+	 	passPath  = "C:\\Users\\"+localSysName+"\\Desktop\\OctiaxVault\\" + hashedSiteName + ".txt";
+	 	File uNameFile = new File(uNamePath);
+		File passFile =  new File(passPath);
+	 	ArrayList<String> result = new ArrayList<String>(2);
+	 	if(uNameFile.exists()) {
+	 		if(passFile.exists()) {
+	 			Scanner uNameScanner = new Scanner(uNameFile);
+	 			Scanner passScanner = new Scanner(passFile);
+				while(uNameScanner.hasNext()) {
+					result.add(uNameScanner.next());
+				}
+				while(passScanner.hasNext()) {
+					result.add(passScanner.next());
+				}
+				resultUserName = new JLabel("Username: "+userNameDecrypt(result.get(0)));
+				resultPassWord = new JLabel("Password: "+passWordDecrypt(result.get(1)));
+				String fin_pass = passWordDecrypt(result.get(1));
+				syPanel.add(resultUserName);
+				syPanel.add(resultPassWord);
+				goVar++;
+				copy = new JLabel("The password has been copied to your clipboard, you'll be soon redirected to "+siteNameInp+".com");
+				copy.setBounds(10,155,450,25);
+				syPanel.add(copy);
+				siteNameInp = siteRedirect(siteNameInp);
+				passCopy(fin_pass);
+				resultUserName.setBounds(10,120,450,25);
+				resultPassWord.setBounds(10,135,450,25);
+			}
+		}
+		return null;
+	}
+
+	public String siteRedirect(String site) throws Exception {
+		String url = "https://www." + site + ".com";
+		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+			Desktop.getDesktop().browse(new URI(url));
+		}
+		return "";
+	}
+
+	public String passCopy(String pass) throws Exception {
+		StringSelection stringSelection = new StringSelection(pass);
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(stringSelection, null);
+		return null;
+	}
+}
