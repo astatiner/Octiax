@@ -30,7 +30,7 @@ class Main  implements ActionListener {
 	private static final String masterUserName= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static final String masterPassword= "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static String loginPassWordText, loginUserNameText, passwordHash, unameHash, siteName, siteNameDef, password, userName, passWord, siteNameRes, sysName, path, MpassWordString, captchaString, gen_captcha="";
-	private static final String passWordKey = "it6.uJOf@2#MagD%",fileKey = "N!@&$k9nVLzoQOuW",userNameKey = "hS3s*fU7&dkSp$&5", initVector = "N!@&$k9nVLzoQOuW";
+	private static final String passWordKey = "it6.uJOf@2#MagD%",fileKey = "N!@&$k9nVLzoQOuW",userNameKey = "hS3s*fU7&dkSp$&5", initVector = "*$SI9!7&yyrUjY@l";
 	private static int tempvar=0,sample=0,tempex=0,sampsucvar=0,integer=0,blankFieldVar=0,loginFailureVar=0,failvar=0,sypBlankFieldVar=0,goVar=0;
 	private static String generated_password="",basepath,generated_string,password1;
 	private static JPanel panel,loginPanel,SUPanel,confirmationPanel,syPanel;
