@@ -47,9 +47,9 @@ class Main  implements ActionListener {
 	 	Date date = new Date();
 	 	System.out.println(System.getProperty("os.name")+" local date-time: "+date.toString());
 	 	path = "C://Users//"+sysName+"//Desktop//";
-	    loginFrame = new JFrame("Login to Octiax");
-	    loginFrame.setIconImage(ImageIO.read(new File("C://Octiax//logo.png")));
-	    loginUserName = new JLabel("Enter your username: ");
+	    	loginFrame = new JFrame("Login to Octiax");
+	    	loginFrame.setIconImage(ImageIO.read(new File("C://Octiax//logo.png")));
+	    	loginUserName = new JLabel("Enter your username: ");
 	 	loginPassWord = new JLabel("Enter your password: ");
 	 	loginUserNameField = new JTextField();
 	 	loginPassWordField = new JPasswordField();
@@ -100,17 +100,20 @@ class Main  implements ActionListener {
 				blankFieldVar++;
 				loginPanel.add(blankField);
 				blankField.setBounds(10, 140, 250, 25);
-			} else {
+			} 
+			else {
 				try {
 					if (hashStrings(loginUserNameText).equals(masterUserName) && hashStrings(loginPassWordText).equals(masterPassword)) {
 						mainWindow();
-					} else {
+					} 
+					else {	
 						loginFailure = new JLabel("Wrong username or password.");
 						loginFailureVar++;
 						loginPanel.add(loginFailure);
 						loginFailure.setBounds(10, 140, 250, 25);
 					}
-				} catch (Exception loginException) {
+				} 
+				catch (Exception loginException) {
 					loginException.printStackTrace();
 				}
 			}
@@ -221,7 +224,8 @@ class Main  implements ActionListener {
 						ex.printStackTrace();
 					}
 
-				} catch (Exception ex) {
+				} 
+				catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
@@ -370,16 +374,15 @@ class Main  implements ActionListener {
 						passwordText.setText("");
 						usernameText.setText("");
 						gap.setVisible(true);
-
-						genpwd.setVisible(false);
-
-						SAVE1.setVisible(false);
+						genpwd.setVisible(false);								
 						SAVE.setVisible(true);
-					} catch (Exception soy) {
-						soy.printStackTrace();
+						SAVE1.setVisible(false);						
+					} 
+					catch (Exception exc) {
+						exc.printStackTrace();
 					}
 				} catch (Exception except) {
-					except.printStackTrace();
+					exc.printStackTrace();
 				}
 			}
 
