@@ -1,3 +1,4 @@
 # Octiax
-Octiax password manager
+Octiax password manager.
+
 Nearing completion.
