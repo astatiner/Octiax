@@ -29,8 +29,8 @@ class Main  implements ActionListener {
 	private static final String masterPassword = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	//I have got to change this and fetch the passwords from somewhere instead of putting it in the code. LMAO!
 	private static String path;
-	private static String gen_captcha="",sNameText;
-	private static final String passkey=E9*&gX@#Z93liFM#,fileKey = "fU&9H5#1UntY3Y!B",userNameKey = "Br8!0Zc#39P7c@#b", initVector = "V&&K$f7pT9mV/6gY";
+	private static String gen_captcha="";
+	private static final String passWordKey = "E9*&gX@#Z93liFM#",fileKey = "fU&9H5#1UntY3Y!B",userNameKey = "Br8!0Zc#39P7c@#b", initVector = "V&&K$f7pT9mV/6gY";
 	private static int tempvar=0,sample=0,tempex=0,sampsucvar=0,integer=0,blankFieldVar=0,loginFailureVar=0,failvar=0,sypBlankFieldVar=0,setvis=0;
 	private static JPanel panel,loginPanel,confirmationPanel,syPanel;
 	private static JLabel loginFailure,sypBlankField,blankField,pwdnotsaved,genpwd,pwdsaved,displayCaptcha,sampsuc,SYPfailure,uNameLabel,pWordLabel,hogaya,empty;
@@ -61,6 +61,7 @@ class Main  implements ActionListener {
 	 	loginUserNameField.setBounds(165,10,140,25);
 	 	loginPassWordField.setBounds(165,40,140,25);
 	 	loginButton.setBounds(10,75,80,25);
+
 	 	signUpButton.setBounds(10,115,100,25);
 	 	loginButton.addActionListener(new Main());
 	 	signUpButton.addActionListener(new Main());
@@ -415,6 +416,11 @@ class Main  implements ActionListener {
         	//This block of code runs when the user wants to see passwords saved.
 			frame.setVisible(false);
 			confirmationFrame = new JFrame("Confirm your login details");
+			try {
+				confirmationFrame.setIconImage(ImageIO.read(new File("C://Octiax//logo.png")));
+			} catch (IOException ex) {
+				throw new RuntimeException(ex);
+			}
 			confirmationPanel = new JPanel();
 			confirmationPanel.setLayout(null);
         	confirmationFrame.setSize(550,350);
@@ -506,8 +512,8 @@ class Main  implements ActionListener {
 					syPanel.remove(hogaya);
 					setvis--;
 				}
-				sNameText = siteNameField.getText();
-				if(sNameText.trim()==""){
+				String sNameText = siteNameField.getText().trim();
+				if(sNameText.trim().equals("")){
 					empty=new JLabel("You cannot leave that field empty.");
 					empty.setBounds(10,100,350,25);
 				}
@@ -544,7 +550,7 @@ class Main  implements ActionListener {
 				//pWordLabel.setBounds(10,130,300,25);
 				setvis++;
 				copyString(resultPassword);
-				hogaya=new JLabel("Your password has been copied to your clipboard. Soon, you will redirected to "+sNameText+".com");
+				hogaya=new JLabel("Your password has been copied to your clipboard. Soon, you will redirected to "+ sNameText +".com");
 				syPanel.add(hogaya);
 				hogaya.setBounds(10,130,600,25);
 				redirect(sNameText);
@@ -713,7 +719,7 @@ class Main  implements ActionListener {
 					}
 
 					else {
-						basefile.createNewFile();
+							basefile.createNewFile();
 						System.out.println("Base file created.");
 					}
 				}
@@ -790,7 +796,7 @@ class Main  implements ActionListener {
 
 	public static String generateCaptcha(String togen) {
 		StringBuilder togenBuilder = new StringBuilder(togen);
-		for(int i = 1; i<=1; i++) {
+		for(int i = 1; i<=5; i++) {
 				String [] captchaCharacters = {"D","w","8","!","3","A","T","a","@","7","c","1","r","$","6","#","B","m","F","C","5","H","v","&","L","Y","2","t","%","6","E","i","W","P","z","d","4","&","M","s","Z","g","S","q","N","V","K","*","G","b","n","Q","u","y","j","X","u","R","p","x","J","o","e","U","9","h","f","k"};
 				Random rand = new Random();
 				int index = rand.nextInt(captchaCharacters.length-1);
@@ -801,7 +807,7 @@ class Main  implements ActionListener {
 		return togen;
 	}
 
-	public void seePassWordsWindow() {
+	public void seePassWordsWindow() throws IOException {
 		ArrayList<String> fileNames = new ArrayList<>();
 		try {
 			String basePath = "C://OctiaxVault//src//base.txt";
@@ -816,6 +822,7 @@ class Main  implements ActionListener {
 		}
 		JFrame sypFrame = new JFrame("Octiax: Saved Passwords");
 			sypFrame.setSize(69*fileNames.size(),500);
+			sypFrame.setIconImage(ImageIO.read(new File("C://Octiax//logo.png")));
 			sypFrame.repaint();
 			syPanel = new JPanel();
 			sypFrame.add(syPanel);
@@ -827,11 +834,10 @@ class Main  implements ActionListener {
 			sypFrame.setResizable(false);
 			myPasswords();
 	}
-
 	public void myPasswords() {
         JLabel newlabel = new JLabel("Enter the name of the site you want to see the password for: ");
-        syPanel.add(newlabel);  
-        newlabel.setBounds(10,40,450,25);
+        syPanel.add(newlabel);
+		newlabel.setBounds(10,40,450,25);
 		siteNameField = new JTextField(100);
 		siteNameField.setBounds(360,40,300,25);
 		GO2=new JButton("GO");
@@ -847,7 +853,7 @@ class Main  implements ActionListener {
 		clipboard.setContents(stringSelection, null);
 	}
 	public void redirect(String sitename) throws Exception{
-		String url = "https://www." + sitename + ".com";
+		String url = "https://www." + sitename.trim() + ".com";
 		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 			Desktop.getDesktop().browse(new URI(url));
 		}
