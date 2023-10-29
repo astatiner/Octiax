@@ -91,10 +91,10 @@ public class seeYourPasswords{
 						resultArrayList.add(fileScannerTwo.next());
 					}
 
-					String retreievedPassword = resultArrayList.get(0);
-					String retreievedUserName = resultArrayList.get(1);
-					String resultPassword = passWordDecrypt(retreievedPassword);
-					String resultUsername = userNameDecrypt(retreievedUserName);
+					String retrievedPassword = resultArrayList.get(0);
+					String retrievedUserName = resultArrayList.get(1);
+					String resultPassword = passWordDecrypt(retrievedPassword);
+					String resultUsername = userNameDecrypt(retrievedUserName);
 					System.out.println("Username: " + resultUsername);
 					System.out.println("Password: " + resultPassword);
 					System.out.println("The password has been copied to your clipboard");
