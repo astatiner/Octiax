@@ -536,10 +536,10 @@ class Main  implements ActionListener {
 							resultArrayList.add(fileScannerTwo.next());
 						}
 
-						String retreievedPassword = resultArrayList.get(0);
-						String retreievedUserName = resultArrayList.get(1);
-						resultPassword = passWordDecrypt(retreievedPassword);
-						resultUsername = userNameDecrypt(retreievedUserName);
+						String retrievedPassword = resultArrayList.get(0);
+						String retrieveddUserName = resultArrayList.get(1);
+						resultPassword = passWordDecrypt(retrievedPassword);
+						resultUsername = userNameDecrypt(retrievedUserName);
 					}
 				}
 				uNameLabel=new JLabel("Username: "+resultUsername);
