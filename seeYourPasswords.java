@@ -13,6 +13,8 @@ import javax.crypto.spec.IvParameterSpec;
 import org.apache.commons.codec.binary.Base64;
 
 public class seeYourPasswords{
+	private static final String orgUserName="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+	private static final String orgPassWord="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 	private static final String passWordKey = "it6.uJOf@2#MagD%", userNameKey = "hS3s*fU7&dkSp$&5", initVector = "*$SI9!7&yyrUjY@l",fileKey = "N!@&$k9nVLzoQOuW";
 	private static String sysName = System.getProperty("user.name");
 	public static void main(String[] args) throws Exception {
