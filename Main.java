@@ -537,7 +537,7 @@ class Main  implements ActionListener {
 						}
 
 						String retrievedPassword = resultArrayList.get(0);
-						String retrieveddUserName = resultArrayList.get(1);
+						String retrievedUserName = resultArrayList.get(1);
 						resultPassword = passWordDecrypt(retrievedPassword);
 						resultUsername = userNameDecrypt(retrievedUserName);
 					}
